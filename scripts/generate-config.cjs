@@ -1,6 +1,7 @@
 /**
- * Genera app-config.generated.ts desde .env para no exponer datos sensibles en el repo.
+ * Genera app-config.ts desde .env o process.env (Vercel, CI).
  * Se ejecuta antes de build/serve (prebuild, prestart).
+ * Prioridad: process.env > .env > defaults
  */
 const fs = require('fs');
 const path = require('path');
@@ -8,6 +9,17 @@ const path = require('path');
 const rootDir = path.resolve(__dirname, '..');
 const envPath = path.join(rootDir, '.env');
 const outPath = path.join(rootDir, 'src/app/core/config/app-config.ts');
+
+const ENV_KEYS = [
+  'NG_APP_CLOUDINARY_CLOUD_NAME',
+  'NG_APP_CLOUDINARY_API_KEY',
+  'NG_APP_CLOUDINARY_PROFILE_TAG',
+  'NG_APP_CLOUDINARY_PROPERTY_TAGS',
+  'NG_APP_DEFAULT_WHATSAPP_PHONE',
+  'NG_APP_DEFAULT_EMAIL',
+  'NG_APP_DEFAULT_LOCATION',
+  'NG_APP_BUSINESS_NAME',
+];
 
 function parseEnv(content) {
   const env = {};
@@ -26,7 +38,7 @@ function parseEnv(content) {
   return env;
 }
 
-/* Fallbacks solo si una clave falta en .env. Crea .env desde .env.example. */
+/* Fallbacks si no se definen en .env ni process.env */
 const defaults = {
   NG_APP_CLOUDINARY_CLOUD_NAME: '',
   NG_APP_CLOUDINARY_API_KEY: '',
@@ -39,13 +51,19 @@ const defaults = {
 };
 
 let env = { ...defaults };
+
 if (fs.existsSync(envPath)) {
   const content = fs.readFileSync(envPath, 'utf8');
-  const parsed = parseEnv(content);
-  env = { ...env, ...parsed };
+  env = { ...env, ...parseEnv(content) };
 } else {
-  console.warn('⚠ .env no encontrado. Copia .env.example a .env y completa los valores.');
+  console.warn('⚠ .env no encontrado. Usando process.env (Vercel/CI) o defaults.');
 }
+
+/* process.env tiene prioridad (Vercel inyecta las variables aquí en el build) */
+ENV_KEYS.forEach((key) => {
+  const v = process.env[key];
+  if (v !== undefined && v !== '') env[key] = v;
+});
 
 const propertyTags = (env.NG_APP_CLOUDINARY_PROPERTY_TAGS || '')
   .split(',')
