@@ -1,0 +1,45 @@
+<section class="hero" aria-labelledby="hero-heading">
+  <div #heroSentinel class="hero-sentinel" aria-hidden="true"></div>
+  <div class="hero-bg-deco" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-tagline">
+        <span class="hero-tagline-dot" aria-hidden="true"></span>
+        {{ 'hero.tagline' | translate }}
+      </p>
+      <h1 id="hero-heading" class="hero-title">
+        {{ 'hero.titlePrefix' | translate }} <span class="hero-title-highlight">{{ 'hero.titleHighlight' | translate }}</span> {{ 'hero.titleSuffix' | translate }}
+      </h1>
+      <p class="hero-desc">
+        {{ 'hero.desc' | translate }}
+      </p>
+      <div class="hero-buttons">
+        <a routerLink="/catalog" class="cta cta-primary">
+          {{ 'hero.ctaCatalog' | translate }}
+          <span class="cta-arrow" aria-hidden="true">→</span>
+        </a>
+        <a routerLink="/about" class="cta cta-secondary">{{ 'hero.ctaAbout' | translate }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="featured" aria-labelledby="featured-heading">
+  <div class="featured-inner">
+    <header class="featured-header">
+      <div class="featured-heading-block">
+        <p class="featured-tagline">{{ 'featured.tagline' | translate }}</p>
+        <h2 id="featured-heading" class="featured-title">{{ 'featured.title' | translate }}</h2>
+      </div>
+      <a routerLink="/catalog" class="featured-explore-btn">
+        {{ 'featured.exploreAll' | translate }}
+        <span class="featured-explore-arrow" aria-hidden="true">→</span>
+      </a>
+    </header>
+    <div class="featured-grid">
+      @for (property of (featured$ | async) ?? []; track trackById($index, property)) {
+        <app-property-card [property]="property" [showWhatsAppButton]="false" [showWhatsAppIconOnly]="true" />
+      }
+    </div>
+  </div>
+</section>
