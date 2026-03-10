@@ -1,1 +1,176 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   TeraHome Design System – Costa Rica & USA audience
+   Trust (slate), nature/growth (teal), neutrals. WCAG AA–aligned.
+   ========================================================================== */
+:root {
+  /* ---- Primary palette (trust, professional) ---- */
+  --color-primary: #0f172a;
+  --color-primary-hover: #1e293b;
+  --color-primary-soft: rgba(15, 23, 42, 0.08);
+  --color-primary-focus: rgba(15, 23, 42, 0.15);
+
+  /* ---- Accent (nature, growth – works for CR & USA) ---- */
+  --color-accent: #0d9488;
+  --color-accent-hover: #0f766e;
+  --color-accent-soft: #f0fdfa;
+  --color-accent-soft-hover: #ccfbf1;
+  --color-accent-glow: rgba(13, 148, 136, 0.35);
+
+  /* ---- Semantic ---- */
+  --color-success: #16a34a;
+  --color-success-dark: #15803d;
+  --color-error: #dc2626;
+  --color-whatsapp: #25d366;
+  --color-whatsapp-hover: #20bd5a;
+
+  /* ---- Text & surfaces ---- */
+  --color-text: #334155;
+  --color-text-muted: #64748b;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+  --color-bg-muted: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-hover: #cbd5e1;
+
+  /* ---- Hero & footer (dark contexts) ---- */
+  --color-hero-bg: #0f2d2a;
+  --color-hero-overlay: rgba(15, 45, 42, 0.92);
+  --color-hero-overlay-alt: rgba(15, 23, 42, 0.88);
+  --color-footer-bg: #0f172a;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: rgba(255, 255, 255, 0.9);
+  --color-on-dark-soft: rgba(255, 255, 255, 0.78);
+  --color-on-dark-subtle: rgba(255, 255, 255, 0.6);
+  --color-on-dark-divider: rgba(255, 255, 255, 0.12);
+  --color-on-dark-border: rgba(255, 255, 255, 0.35);
+  --color-on-dark-bg-soft: rgba(255, 255, 255, 0.08);
+  --color-overlay: rgba(0, 0, 0, 0.4);
+  --color-overlay-dark: rgba(15, 23, 42, 0.65);
+  --color-overlay-dark-hover: rgba(15, 23, 42, 0.85);
+  --color-overlay-dark-soft: rgba(15, 23, 42, 0.7);
+
+  /* ---- Highlights (labels, links on light) ---- */
+  --color-highlight: #0d9488;
+  --color-highlight-soft: #ccfbf1;
+  --color-profile-accent: #0d9488;
+
+  /* ---- Shadows (design token system) ---- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 8px 20px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(15, 23, 42, 0.15);
+  --shadow-focus-strong: 0 0 0 3px rgba(15, 23, 42, 0.25);
+
+  /* ---- Radii ---- */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* ---- Layout ---- */
+  --content-max-width: 1200px;
+  --layout-max-width: 1400px;
+  --section-padding-x: 1.5rem;
+  --section-padding-y: 2.5rem;
+  --section-padding-y-bottom: 3rem;
+  --header-height: 72px;
+
+  /* ---- Motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0.01ms;
+    --duration-normal: 0.01ms;
+    --duration-slow: 0.01ms;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+a {
+  color: inherit;
+  transition: color var(--duration-fast) var(--ease-out-quad),
+    opacity var(--duration-fast) var(--ease-out-quad);
+}
+
+button {
+  transition: transform var(--duration-fast) var(--ease-out-quad),
+    background-color var(--duration-fast) var(--ease-out-quad),
+    border-color var(--duration-fast) var(--ease-out-quad);
+}
+
+/* Animaciones reutilizables para páginas y secciones */
+@keyframes section-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Design recommendations (Costa Rica & USA audience)
+   - Use only tokens from :root; avoid new hex/rgba in components.
+   - Primary (slate): trust, professional. Accent (teal): nature, growth.
+   - For new components: --shadow-card / --shadow-focus, --radius-*, --duration-*.
+   - Text on dark (hero/footer): --color-on-dark, --color-on-dark-muted.
+   - WCAG: contrast is met for --color-text on --color-surface, --color-on-dark on --color-hero-bg.
+   --------------------------------------------------------------------------- */
