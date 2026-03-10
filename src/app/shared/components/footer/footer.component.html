@@ -1,0 +1,76 @@
+<footer class="footer">
+  <div class="footer-upper">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <div class="brand-head">
+          <span class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </span>
+          <a routerLink="/" class="brand-name">TeraHome</a>
+        </div>
+        <p class="brand-desc">{{ 'footer.brandDesc' | translate }}</p>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">{{ 'footer.explore' | translate }}</h3>
+        <nav class="footer-nav" aria-label="Enlaces de exploración">
+          <a routerLink="/catalog">{{ 'footer.catalog' | translate }}</a>
+          <a routerLink="/catalog">{{ 'footer.land' | translate }}</a>
+          <a routerLink="/about">{{ 'footer.guides' | translate }}</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">{{ 'footer.company' | translate }}</h3>
+        <nav class="footer-nav" aria-label="Enlaces de empresa">
+          <a routerLink="/about">{{ 'footer.about' | translate }}</a>
+          <a routerLink="/contact">{{ 'footer.contact' | translate }}</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">{{ 'footer.privacy' | translate }}</a>
+        </nav>
+      </div>
+      <div class="footer-col footer-contact">
+        <h3 class="footer-col-title">{{ 'footer.contactTitle' | translate }}</h3>
+        <ul class="contact-list">
+          <li>
+            <span class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+            </span>
+            <span>{{ 'footer.costaRica' | translate }}</span>
+          </li>
+          <li>
+            <span class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </span>
+            <a href="tel:+50662907950">+506 6290 7950</a>
+          </li>
+          <li>
+            <span class="contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <a href="mailto:dariovillalobos0912&#64;gmail.com">dariovillalobos0912&#64;gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-inner footer-bottom-inner">
+      <p class="copy">&copy; {{ currentYear }} TeraHome. {{ 'footer.rights' | translate }}</p>
+      <p class="locale">
+        <span class="locale-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </span>
+        {{ (localeService.locale() === 'es' ? 'footer.localeEs' : 'footer.localeCr') | translate }}
+      </p>
+    </div>
+  </div>
+</footer>

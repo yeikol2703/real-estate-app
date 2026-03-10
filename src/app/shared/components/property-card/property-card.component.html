@@ -1,0 +1,99 @@
+@let p = property();
+@let isCatalog = layout() === 'catalog';
+<article class="card" [class.card-catalog]="isCatalog">
+  <a [routerLink]="['/catalog', p.id]" class="image-wrap">
+    @if (p.images.length) {
+      <img [src]="p.images[0]" [alt]="p.title" loading="lazy" />
+    } @else {
+      <div class="placeholder">{{ 'card.noImage' | translate }}</div>
+    }
+    @if (p.status) {
+      <span class="status" [class.status-available]="isCatalog && isAvailableStatus(p.status)" [class.status-sold]="isCatalog && isSoldStatus(p.status)">{{ p.status }}</span>
+    }
+  </a>
+  <div class="body">
+    @if (isCatalog) {
+      <p class="price price-catalog">{{ formatPrice(p.price) }}</p>
+      <h3 class="title">
+        <a [routerLink]="['/catalog', p.id]">{{ p.title }}</a>
+      </h3>
+      @if (p.location) {
+        <p class="location">
+          <span class="location-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="location-text">{{ p.location }}</span>
+        </p>
+      }
+      <div class="specs-row" role="list">
+        <span class="spec-item" role="listitem">
+          <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          {{ p.bedrooms > 0 ? p.bedrooms : '—' }} {{ 'card.hab' | translate }}
+        </span>
+        <span class="spec-item" role="listitem">
+          <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="8" width="16" height="10" rx="1"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          {{ p.bathrooms > 0 ? p.bathrooms : '—' }} {{ 'card.banos' | translate }}
+        </span>
+        <span class="spec-item" role="listitem">
+          <svg class="spec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          {{ p.size > 0 ? p.size + ' m²' : '—' }}
+        </span>
+      </div>
+      <a [routerLink]="['/catalog', p.id]" class="btn-view-details">{{ 'catalog.viewDetail' | translate }}</a>
+    } @else {
+      <div class="price-row">
+        <p class="price">{{ formatPrice(p.price) }}</p>
+        <span class="wishlist-icon" aria-hidden="true" [attr.title]="'card.favorites' | translate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </span>
+      </div>
+      <h3 class="title">
+        <a [routerLink]="['/catalog', p.id]">{{ p.title }}</a>
+      </h3>
+      @if (p.location) {
+        <p class="location">
+          <span class="location-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="location-text">{{ p.location }}</span>
+        </p>
+      }
+      <div class="specs">
+        @if (p.type) {
+          <span class="spec">{{ p.type }}</span>
+        }
+        @if (p.bedrooms > 0) {
+          <span class="spec">{{ p.bedrooms }} {{ 'card.hab' | translate }}</span>
+        }
+        @if (p.bathrooms > 0) {
+          <span class="spec">{{ p.bathrooms }} {{ 'card.banos' | translate }}</span>
+        }
+        @if (p.size > 0) {
+          <span class="spec">{{ formatSize(p.size) }}</span>
+        }
+      </div>
+      <div class="actions" [class.icon-only]="showWhatsAppIconOnly() && !showWhatsAppButton()">
+        @if (showWhatsAppButton()) {
+          <a [href]="getWhatsAppUrl(p)" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+            {{ 'card.contactWhatsApp' | translate }}
+          </a>
+        } @else if (showWhatsAppIconOnly()) {
+          <a
+            [href]="getWhatsAppUrl(p)"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="icon-whatsapp"
+            [attr.aria-label]="'card.contactWhatsApp' | translate">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2a10 10 0 0 0-8.66 15L2 22l5.17-1.35A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.07-1.12l-.29-.17-3.07.8.82-2.99-.19-.31A8 8 0 1 1 12 20Zm4.39-5.88c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.95-1.22-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.48-.4-.42-.54-.43h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.68 2.56 4.07 3.58.57.24 1.01.38 1.36.48.57.18 1.08.16 1.49.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" />
+            </svg>
+          </a>
+        }
+      </div>
+    }
+  </div>
+</article>

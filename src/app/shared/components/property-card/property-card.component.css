@@ -1,0 +1,327 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--duration-normal) var(--ease-out-quad), border-color var(--duration-normal) var(--ease-out-quad), transform var(--duration-normal) var(--ease-out-quad);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+}
+
+/* Catalog: caja gris clara (paleta), bordes consistentes */
+.card-catalog {
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-normal) var(--ease-out-quad), border-color var(--duration-normal) var(--ease-out-quad), transform var(--duration-normal) var(--ease-out-quad);
+}
+
+.card-catalog:hover {
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+}
+
+.card-catalog .image-wrap {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.card-catalog .body {
+  background: var(--color-surface);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding: 1.25rem 1rem;
+}
+
+.image-wrap {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: var(--color-bg-muted);
+  overflow: hidden;
+}
+
+.image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.card:hover .image-wrap img {
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-wrap img {
+    transition: none;
+  }
+  .card:hover .image-wrap img {
+    transform: none;
+  }
+  .card:hover,
+  .card-catalog:hover {
+    transform: none;
+  }
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.status {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: var(--color-primary);
+  color: var(--color-on-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.price {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.wishlist-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.wishlist-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.title a {
+  color: var(--color-primary);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.title a:hover {
+  text-decoration: underline;
+}
+
+.location {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.location-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-text-muted);
+}
+
+.location-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.location-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+}
+
+.spec + .spec {
+  border-left: 1px solid var(--color-border);
+  padding-left: 0.75rem;
+}
+
+.actions {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.actions.icon-only {
+  justify-content: flex-end;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-on-dark);
+  background: var(--color-accent);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background 0.2s ease, filter 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+  background: var(--color-accent-hover);
+  filter: brightness(1.02);
+}
+
+.icon-whatsapp {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-on-dark);
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.icon-whatsapp svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.icon-whatsapp:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Catalog layout */
+.card-catalog .status {
+  left: auto;
+  right: 0.75rem;
+  top: 0.75rem;
+}
+
+.card-catalog .status.status-available {
+  background: var(--color-success);
+  color: var(--color-on-dark);
+}
+
+.card-catalog .status.status-sold {
+  background: var(--color-primary);
+  color: var(--color-on-dark);
+}
+
+.card-catalog .location {
+  margin-top: 0.25rem;
+}
+
+.card-catalog .price-catalog {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-success);
+  letter-spacing: -0.02em;
+}
+
+.card-catalog .specs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.card-catalog .spec-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.card-catalog .spec-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.card-catalog .btn-view-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-on-dark);
+  background: var(--color-accent);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s ease;
+}
+
+.card-catalog .btn-view-details:hover {
+  background: var(--color-accent-hover);
+}
