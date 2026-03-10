@@ -1,0 +1,122 @@
+<div class="detail">
+  @if (loading()) {
+    <p class="loading">{{ 'detail.loading' | translate }}</p>
+  } @else if (notFound() || !property()) {
+    <p class="not-found">{{ 'detail.notFound' | translate }}</p>
+    <a routerLink="/catalog" class="back">{{ 'detail.back' | translate }}</a>
+  } @else {
+    @let p = property()!;
+    <a routerLink="/catalog" class="back">← {{ 'detail.back' | translate }}</a>
+
+    <div class="detail-layout">
+      <article class="detail-main">
+        <div class="gallery">
+          @if (currentImage()) {
+            <div class="main-image-wrap">
+              <img class="main-image" [src]="currentImage()!" [alt]="p.title" loading="lazy" />
+              @if (p.images.length > 1) {
+                <button type="button" class="nav-btn prev" (click)="previousImage()" [attr.aria-label]="'detail.prevImage' | translate">‹</button>
+                <button type="button" class="nav-btn next" (click)="nextImage()" [attr.aria-label]="'detail.nextImage' | translate">›</button>
+                <div class="counter">{{ activeImageIndex() + 1 }} / {{ p.images.length }}</div>
+              }
+            </div>
+          }
+          @if (p.images.length > 0) {
+            <div class="thumbs-row">
+            @for (img of p.images.slice(0, 3); track img; let i = $index) {
+              <button
+                type="button"
+                class="thumb-btn"
+                [class.active]="activeImageIndex() === i"
+                (click)="selectImage(i)"
+                [attr.aria-label]="('detail.viewImage' | translate) + ' ' + (i + 1)">
+                <img [src]="img" [alt]="p.title + ' miniatura ' + (i + 1)" loading="lazy" />
+              </button>
+            }
+            @if (p.images.length > 3) {
+              <div class="thumbs-more">+{{ p.images.length - 3 }} {{ 'detail.moreImages' | translate }}</div>
+            }
+            </div>
+          }
+          @if (p.images.length === 0) {
+            <div class="placeholder">{{ 'card.noImage' | translate }}</div>
+          }
+        </div>
+
+        <header class="detail-header">
+          <div class="detail-header-top">
+            <div class="detail-header-left">
+              <h1 class="detail-title">{{ p.title }}</h1>
+              <p class="detail-address">
+                <span class="detail-address-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                {{ p.location || defaultLocation }}
+              </p>
+            </div>
+            <div class="detail-stats" role="list">
+              <div class="detail-stat-item" role="listitem">
+                <span class="detail-stat-value">{{ p.bedrooms > 0 ? p.bedrooms : '—' }}</span>
+                <span class="detail-stat-label">{{ 'detail.bedrooms' | translate }}</span>
+              </div>
+              <div class="detail-stat-divider" aria-hidden="true"></div>
+              <div class="detail-stat-item" role="listitem">
+                <span class="detail-stat-value">{{ p.bathrooms > 0 ? p.bathrooms : '—' }}</span>
+                <span class="detail-stat-label">{{ 'detail.bathrooms' | translate }}</span>
+              </div>
+              <div class="detail-stat-divider" aria-hidden="true"></div>
+              <div class="detail-stat-item" role="listitem">
+                <span class="detail-stat-value">{{ p.size > 0 ? p.size : '—' }}</span>
+                <span class="detail-stat-label">m²</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <hr class="detail-sep" aria-hidden="true" />
+
+        <section class="detail-section" aria-labelledby="desc-heading">
+          <h2 id="desc-heading" class="detail-section-title">{{ 'detail.description' | translate }}</h2>
+          <p class="detail-description">
+            {{ 'detail.descriptionText' | translate }}
+          </p>
+        </section>
+
+        <section class="detail-section detail-section-location" aria-labelledby="location-heading">
+          <h2 id="location-heading" class="detail-section-title">{{ 'detail.location' | translate }}</h2>
+          <div class="location-box">
+            <span class="location-pin" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            </span>
+            <span class="location-label">{{ defaultLocation }}</span>
+          </div>
+        </section>
+      </article>
+
+      <aside class="detail-sidebar">
+        <div class="sidebar-block">
+          <h2 class="sidebar-label">{{ 'detail.price' | translate }}</h2>
+          <p class="sidebar-price">{{ formatPrice(p.price) }}</p>
+        </div>
+
+        <div class="sidebar-agent">
+          <img [src]="(agentPhoto$ | async) || '/assets/perfil.jpg'" alt="" class="agent-photo" width="64" height="64" />
+          <p class="agent-name">{{ agentName }}</p>
+          <p class="agent-title">{{ 'detail.agentTitle' | translate }}</p>
+        </div>
+
+        <a [href]="whatsAppUrl()" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-sidebar">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          {{ 'detail.contactAgent' | translate }}
+        </a>
+
+        <div class="sidebar-actions">
+          <button type="button" class="action-btn share-btn" (click)="copyShareLink()" [attr.aria-label]="shareCopied() ? ('detail.shareCopied' | translate) : ('detail.share' | translate)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <span>{{ shareCopied() ? ('detail.shareCopied' | translate) : ('detail.share' | translate) }}</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+  }
+</div>

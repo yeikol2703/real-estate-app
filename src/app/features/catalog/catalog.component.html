@@ -1,0 +1,75 @@
+<div class="catalog-page">
+  <header class="catalog-header">
+    <h1 id="catalog-heading" class="catalog-title">{{ 'catalog.title' | translate }}</h1>
+    <p class="catalog-desc">
+      {{ 'catalog.desc' | translate }}
+    </p>
+  </header>
+
+  <div class="filter-bar">
+    <form [formGroup]="filterForm" class="filter-bar-form">
+      <label class="search-wrap">
+        <span class="visually-hidden">{{ 'catalog.searchA11y' | translate }}</span>
+        <span class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input
+          type="search"
+          formControlName="search"
+          [placeholder]="'catalog.searchPlaceholder' | translate"
+          class="search-input"
+          autocomplete="off" />
+      </label>
+      <label class="filter-dropdown-wrap">
+        <span class="visually-hidden">{{ 'catalog.typeA11y' | translate }}</span>
+        <select formControlName="type" class="filter-select">
+          <option value="">{{ 'catalog.typePlaceholder' | translate }}</option>
+          @for (t of (propertyTypes$ | async) ?? []; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+      </label>
+      <label class="filter-dropdown-wrap">
+        <span class="visually-hidden">{{ 'catalog.priceA11y' | translate }}</span>
+        <select formControlName="priceRange" class="filter-select">
+          @for (r of priceRanges; track r.value) {
+            <option [value]="r.value">{{ r.translationKey | translate }}</option>
+          }
+        </select>
+      </label>
+      <label class="filter-dropdown-wrap">
+        <span class="visually-hidden">{{ 'catalog.bedsA11y' | translate }}</span>
+        <select formControlName="bedrooms" class="filter-select">
+          @for (opt of bedroomOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.translationKey | translate }}</option>
+          }
+        </select>
+      </label>
+      <button type="button" class="filter-apply" (click)="filterForm.updateValueAndValidity()">{{ 'catalog.apply' | translate }}</button>
+    </form>
+  </div>
+
+  <div class="catalog-content">
+    @if (error()) {
+      <p class="message message-error">{{ error() }}</p>
+    } @else if (loading()) {
+      <p class="message">{{ 'catalog.loading' | translate }}</p>
+    } @else {
+      @let list = filteredProperties$ | async;
+      @if (list) {
+        <div class="catalog-grid" role="list">
+          @for (property of list; track trackById($index, property)) {
+            <app-property-card
+              [property]="property"
+              [layout]="'catalog'"
+              [showWhatsAppButton]="false"
+              [showWhatsAppIconOnly]="false" />
+          }
+        </div>
+        @if (list.length === 0) {
+          <p class="message message-empty">{{ 'catalog.noResults' | translate }}</p>
+        }
+      }
+    }
+  </div>
+</div>
