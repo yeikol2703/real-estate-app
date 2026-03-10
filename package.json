@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "generate-config": "node scripts/generate-config.cjs",
+    "prebuild": "node scripts/generate-config.cjs",
+    "prestart": "node scripts/generate-config.cjs",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
